@@ -5,6 +5,27 @@ export default function Experience() {
     //questo matcapTexture viene da una libreria di texture di github "7B5254_E9DCC7_B19986_C8AC91"
     const [matcapTexture] = useMatcapTexture('7B5254_E9DCC7_B19986_C8AC91', 256)
 
+    const tempArray =
+        [...Array(100)]
+            .map(() =>
+                <mesh
+                    scale={0.2 + Math.random() * 0.2}
+                    position={[
+                        (Math.random() - 0.5) * 10,
+                        (Math.random() - 0.5) * 10,
+                        (Math.random() - 0.5) * 10
+                    ]}
+                    rotation={[
+                        Math.random() * Math.PI,
+                        Math.random() * Math.PI,
+                        0
+                    ]}
+                >
+                    <torusGeometry />
+                    <meshMatcapMaterial matcap={matcapTexture} />
+                </mesh>
+            )
+
     return <>
 
         <Perf position="top-left" />
@@ -28,6 +49,8 @@ export default function Experience() {
                 <meshMatcapMaterial matcap={matcapTexture} />
             </Text3D>
         </Center>
+
+        {tempArray}
 
 
     </>
