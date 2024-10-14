@@ -1,14 +1,22 @@
 import { Center, OrbitControls, Text3D, useMatcapTexture } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
+import { useEffect, useState } from 'react'
 
 export default function Experience() {
+    const [torusGeometry, setTorusGeometry] = useState()
+    const [material, setMaterial] = useState()
+
     //questo matcapTexture viene da una libreria di texture di github "7B5254_E9DCC7_B19986_C8AC91"
     const [matcapTexture] = useMatcapTexture('7B5254_E9DCC7_B19986_C8AC91', 256)
+
+
 
     const tempArray =
         [...Array(100)]
             .map(() =>
                 <mesh
+                    geometry={torusGeometry}
+                    material={material}
                     scale={0.2 + Math.random() * 0.2}
                     position={[
                         (Math.random() - 0.5) * 10,
@@ -21,20 +29,23 @@ export default function Experience() {
                         0
                     ]}
                 >
-                    <torusGeometry />
-                    <meshMatcapMaterial matcap={matcapTexture} />
                 </mesh>
             )
-
     return <>
 
         <Perf position="top-left" />
 
         <OrbitControls makeDefault />
+
+        <torusGeometry ref={setTorusGeometry} />
+
+        <meshMatcapMaterial ref={setMaterial} matcap={matcapTexture} />
+
         {/* Center helper mette il text al centro */}
         <Center>
             {/* importare Text3D */}
             <Text3D
+                material={material}
                 font="./fonts/helvetiker_regular.typeface.json"
                 size={0.75}
                 height={0.2}
@@ -46,7 +57,6 @@ export default function Experience() {
                 bevelSegments={5}
             >
                 Hello R3F
-                <meshMatcapMaterial matcap={matcapTexture} />
             </Text3D>
         </Center>
 
